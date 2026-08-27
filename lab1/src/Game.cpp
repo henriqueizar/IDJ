@@ -52,6 +52,12 @@ Game& Game::GetInstance(std::string title, int width, int height){
 
 
 void Game::Run(){
+    while (!State::QuitRequested()){
+        State::Update(0);
+        State::Render());
+        SDL_RenderPresent();
+        SDL_Delay(33); //1 frame por 33 ms, ~ 30FPS
+    }
 }
 
 SDL_Renderer* Game::GetRenderer(){
