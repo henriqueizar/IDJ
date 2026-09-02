@@ -1,10 +1,10 @@
 #define INCLUDE_SDL_IMAGE
 #define INCLUDE_SDL_MIXER
 #include "Game.h"
+#include "State.h"
 #include "SDL_include.h"
 #include <iostream>
 
-class State;
 // construtor
 Game::Game(std::string title, int width, int height){
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) != 0) {
@@ -38,6 +38,8 @@ Game::Game(std::string title, int width, int height){
 
         std::cout << "Error SDL_CreateRenderer:" << SDL_GetError() << std::endl;
     }
+
+    state = new State();
 };
 
 Game* Game::instance = nullptr;
@@ -52,10 +54,10 @@ Game& Game::GetInstance(std::string title, int width, int height){
 
 
 void Game::Run(){
-    while (!State::QuitRequested()){
-        State::Update(0);
-        State::Render());
-        SDL_RenderPresent();
+    while (!GetState().QuitRequested()){
+        GetState().Update(0);
+        GetState().Render();
+        SDL_RenderPresent(renderer);
         SDL_Delay(33); //1 frame por 33 ms, ~ 30FPS
     }
 }
@@ -63,10 +65,9 @@ void Game::Run(){
 SDL_Renderer* Game::GetRenderer(){
     return renderer;
 }
-/**
+
 State& Game::GetState(){
     return *state;
 }
-*/
 
 

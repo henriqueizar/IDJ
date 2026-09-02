@@ -3,10 +3,10 @@
 
 #define INCLUDE_SDL
 #include "SDL_include.h"
-//#include "State.h"
+//#include "State.h" nao precisa, só fazer forward declaration
 #include <string>
 
-
+class State{}; //forward declaration
 
 class Game{
     
@@ -17,7 +17,7 @@ Game(std::string title, int width, int height);
     static Game* instance;
     SDL_Window* window;
     SDL_Renderer* renderer;
-   /** State* state;*/
+    State* state;
 
 
 
@@ -25,7 +25,7 @@ public:
     static Game& GetInstance(std::string title, int width, int height);
     void Run();
     SDL_Renderer* GetRenderer();
-    //State& GetState();
+    State& GetState();
 };
 
 

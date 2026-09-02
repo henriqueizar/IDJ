@@ -4,7 +4,7 @@
 
 State::State(){
     quitRequested = false;
-    //bg = new Sprite();
+    bg.Open("img/Background.png")
 }
 
 void State::Update(float dt){
