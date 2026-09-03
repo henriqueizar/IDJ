@@ -6,7 +6,7 @@
 //#include "State.h" nao precisa, só fazer forward declaration
 #include <string>
 
-class State{}; //forward declaration
+class State; //forward declaration
 
 class Game{
     

@@ -5,10 +5,11 @@
 #include "SDL_include.h"
 #include <iostream>
 #include "Game.h"
-#
+
 
 int main (int argc, char** argv) {
-    Game::GetInstance("Henrique Izar 222026985", 1200, 900);
+    Game::GetInstance("Henrique Izar 222026985", 1500, 750);
     std::cout << "ENRIKI ESTEVE AKI";
+    Game::GetInstance("",0,0).Run();
     return 0;
 }

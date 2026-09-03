@@ -4,7 +4,7 @@
 
 State::State(){
     quitRequested = false;
-    bg.Open("img/Background.png")
+    bg.Open("./assets/img/Background.png");
 }
 
 void State::Update(float dt){
@@ -15,7 +15,7 @@ void State::Update(float dt){
 }
 
 void State::Render(){
-    // bg.Render(0,0);
+    bg.Render(0,0);
 }
 
 void State::LoadAssets(){ //pré carrega os assets

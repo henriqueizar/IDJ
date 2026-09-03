@@ -24,7 +24,7 @@ void Sprite::Open(std::string file){
     if (IsOpen()) {
         SDL_DestroyTexture(texture);
     }
-    texture = IMG_LoadTexture(Game::GetRenderer(), file.c_str());
+    texture = IMG_LoadTexture(Game::GetInstance("",0,0).GetRenderer(), file.c_str());
     if (!IsOpen()){
         std::cout << "IMG_LoadTexture probably returns nullptr" <<  '\n' << IMG_GetError() << std::endl;
     }
@@ -39,7 +39,7 @@ void Sprite::SetClip(int x, int y, int w, int h){
 }
 
 void Sprite::Render(int x, int y){
-    SDL_Renderer* renderer = Game::GetRenderer();
+    SDL_Renderer* renderer = Game::GetInstance("",0,0).GetRenderer();
     SDL_Rect dstrect;
     dstrect.x = x;
     dstrect.y = y;

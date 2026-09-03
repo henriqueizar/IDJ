@@ -1,10 +1,9 @@
 #ifndef STATE_H
 #define STATE_H
-
 #define INCLUDE_SDL
 #include "SDL_include.h"
 #include "Sprite.h"
-#include "Music.h"
+//#include "Music.h"
 #include <string>
 
 
@@ -18,7 +17,7 @@ class State{
 
     private:
         Sprite bg;
-        Music music;
+        //Music music;
         bool quitRequested;
 };
 
