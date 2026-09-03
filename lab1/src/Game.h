@@ -4,7 +4,7 @@
 #define INCLUDE_SDL
 #include "SDL_include.h"
 //#include "State.h" nao precisa, só fazer forward declaration
-#include <string>
+#include <string>   
 
 class State; //forward declaration
 

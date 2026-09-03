@@ -5,6 +5,8 @@
 State::State(){
     quitRequested = false;
     bg.Open("./assets/img/Background.png");
+    music.Open("./assets/audio/memo.wav");
+    music.Play();
 }
 
 void State::Update(float dt){
