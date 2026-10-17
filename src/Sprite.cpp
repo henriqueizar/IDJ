@@ -38,24 +38,43 @@ void Sprite::SetClip(int x, int y, int w, int h){
     clipRect.h = h;
 }
 
-void Sprite::Render(int x, int y){
+void Sprite::Render(int x, int y, int w, int h){
     SDL_Renderer* renderer = Game::GetInstance("",0,0).GetRenderer();
     SDL_Rect dstrect;
     dstrect.x = x;
     dstrect.y = y;
-    dstrect.w = clipRect.w;
-    dstrect.h = clipRect.h;
+    dstrect.w = w;
+    dstrect.h = h;
     SDL_RenderCopy(renderer, texture, &clipRect, &dstrect);
 }
 
 int Sprite::GetWidth(){
-    return width;
+    return width/frameCountW;
 }
 
 int Sprite::GetHeight(){
-    return height;
+    return height/frameCountH;
 }
 
 bool Sprite::IsOpen(){
     return texture != nullptr;
 }
+
+void Sprite::SetFrame(int frame){
+    if (frame < 0 || frame > frameCountW * frameCountH){
+        std::cout<<"Sprite: frame out of range"<<std::endl;
+        std::cerr;
+    } else{
+    int x = (frame % frameCountW) * (width / frameCountW);
+    int y = (frame / frameCountW) * (height / frameCountH);
+    int w = width/frameCountW;
+    int h = height/frameCountH;
+    SetClip(x,y, w, h);
+    }
+}
+
+void Sprite::SetFrameCount(int frameCountW, int frameCountH){
+    this->frameCountW = frameCountW;
+    this->frameCountH = frameCountH;
+}
+
