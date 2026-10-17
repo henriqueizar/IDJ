@@ -15,9 +15,10 @@ class GameObject{
         void RequestDelete();
         void AddComponent(Component* cpt);
         void RemoveComponent(Component* cpt);
-        
-        T* GetComponent();
+
+
         template <typename T>
+        T* GetComponent();
         Rect box;
     private:
         std::vector <Component*> components;
