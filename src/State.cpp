@@ -1,10 +1,22 @@
 #include "State.h"
 #include "SDL_include.h"
 #include <iostream>
+#include "SpriteRenderer.h"
+#include "Bixo.h"
 
 State::State(){
     quitRequested = false;
-    bg.Open("./assets/img/Background.png");
+    GameObject* go_bg = new GameObject();
+    SpriteRenderer* sr_bg = new SpriteRenderer(*go_bg, "./assets/img/Background.png");
+    go_bg->AddComponent(sr_bg);
+    AddObject(go_bg);
+    GameObject* go = new GameObject();
+    Bixo* bixo = new Bixo(*go);
+    go->AddComponent(bixo);
+    go->box.x = 100;
+    go->box.y = 150;
+    AddObject(go);
+
     music.Open("./assets/audio/memo.wav");
     music.Play();
 }
@@ -30,7 +42,6 @@ void State::Update(float dt){
 }
 
 void State::Render(){
-    bg.Render(0,0);
     for (int i=0; i < objectArray.size();i++){
         objectArray[i]->Render();
     }

@@ -19,7 +19,8 @@ class State{
         void AddObject(GameObject* go);
 
     private:
-        Sprite bg;
+        /*GameObject* bg;
+        GameObject* bixo;*/
         Music music;
         bool quitRequested;
         std::vector<std::unique_ptr<GameObject>> objectArray;
