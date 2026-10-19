@@ -4,12 +4,12 @@
 #include "Game.h"
 #include <iostream>
 
-Sprite::Sprite(){
+Sprite::Sprite() : texture(nullptr), frameCountW(1), frameCountH(1){
     Sprite::texture = nullptr;
 }
 
-Sprite::Sprite(std::string file) {
-    Sprite::texture = nullptr;
+Sprite::Sprite(std::string file, int frameCountW, int frameCountH)
+    : texture(nullptr), frameCountW(frameCountW), frameCountH(frameCountH) {
     Sprite::Open(file);
 
 }
@@ -27,9 +27,10 @@ void Sprite::Open(std::string file){
     texture = IMG_LoadTexture(Game::GetInstance("",0,0).GetRenderer(), file.c_str());
     if (!IsOpen()){
         std::cout << "IMG_LoadTexture probably returns nullptr" <<  '\n' << IMG_GetError() << std::endl;
+        return;
     }
     SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
-    SetClip(0, 0, width, height);
+    SetFrame(0);
 }
 void Sprite::SetClip(int x, int y, int w, int h){
     clipRect.x = x;
@@ -61,9 +62,8 @@ bool Sprite::IsOpen(){
 }
 
 void Sprite::SetFrame(int frame){
-    if (frame < 0 || frame > frameCountW * frameCountH){
-        std::cout<<"Sprite: frame out of range"<<std::endl;
-        std::cerr;
+    if (frame < 0 || frame >= frameCountW * frameCountH){
+        std::cerr<<"Sprite: frame out of range"<<std::endl;
     } else{
     int x = (frame % frameCountW) * (width / frameCountW);
     int y = (frame / frameCountW) * (height / frameCountH);
