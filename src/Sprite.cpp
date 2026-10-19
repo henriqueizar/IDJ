@@ -4,12 +4,12 @@
 #include "Game.h"
 #include <iostream>
 
-Sprite::Sprite(){
+Sprite::Sprite() : texture(nullptr), frameCountW(1), frameCountH(1){
     Sprite::texture = nullptr;
 }
 
-Sprite::Sprite(std::string file) {
-    Sprite::texture = nullptr;
+Sprite::Sprite(std::string file, int frameCountW, int frameCountH)
+    : texture(nullptr), frameCountW(frameCountW), frameCountH(frameCountH) {
     Sprite::Open(file);
 
 }
@@ -27,9 +27,10 @@ void Sprite::Open(std::string file){
     texture = IMG_LoadTexture(Game::GetInstance("",0,0).GetRenderer(), file.c_str());
     if (!IsOpen()){
         std::cout << "IMG_LoadTexture probably returns nullptr" <<  '\n' << IMG_GetError() << std::endl;
+        return;
     }
     SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
-    SetClip(0, 0, width, height);
+    SetFrame(0);
 }
 void Sprite::SetClip(int x, int y, int w, int h){
     clipRect.x = x;
@@ -38,24 +39,42 @@ void Sprite::SetClip(int x, int y, int w, int h){
     clipRect.h = h;
 }
 
-void Sprite::Render(int x, int y){
+void Sprite::Render(int x, int y, int w, int h){
     SDL_Renderer* renderer = Game::GetInstance("",0,0).GetRenderer();
     SDL_Rect dstrect;
     dstrect.x = x;
     dstrect.y = y;
-    dstrect.w = clipRect.w;
-    dstrect.h = clipRect.h;
+    dstrect.w = w;
+    dstrect.h = h;
     SDL_RenderCopy(renderer, texture, &clipRect, &dstrect);
 }
 
 int Sprite::GetWidth(){
-    return width;
+    return width/frameCountW;
 }
 
 int Sprite::GetHeight(){
-    return height;
+    return height/frameCountH;
 }
 
 bool Sprite::IsOpen(){
     return texture != nullptr;
 }
+
+void Sprite::SetFrame(int frame){
+    if (frame < 0 || frame >= frameCountW * frameCountH){
+        std::cerr<<"Sprite: frame out of range"<<std::endl;
+    } else{
+    int x = (frame % frameCountW) * (width / frameCountW);
+    int y = (frame / frameCountW) * (height / frameCountH);
+    int w = width/frameCountW;
+    int h = height/frameCountH;
+    SetClip(x,y, w, h);
+    }
+}
+
+void Sprite::SetFrameCount(int frameCountW, int frameCountH){
+    this->frameCountW = frameCountW;
+    this->frameCountH = frameCountH;
+}
+
