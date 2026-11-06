@@ -3,22 +3,39 @@
 #include <iostream>
 #include "SpriteRenderer.h"
 #include "Bixo.h"
+#include "TileMap.h"
 
 State::State(){
     quitRequested = false;
     GameObject* go_bg = new GameObject();
-    SpriteRenderer* sr_bg = new SpriteRenderer(*go_bg, "./assets/img/Background.png");
+    SpriteRenderer* sr_bg = new SpriteRenderer(*go_bg, "./assets/img/Backgroud2.png");
     go_bg->AddComponent(sr_bg);
-    AddObject(go_bg);
-    GameObject* go = new GameObject();
-    Bixo* bixo = new Bixo(*go);
-    go->AddComponent(bixo);
-    go->box.x = 100;
-    go->box.y = 150;
-    AddObject(go);
+    
+    GameObject* go_bixo = new GameObject();
+    Bixo* bixo = new Bixo(*go_bixo);
+    go_bixo->AddComponent(bixo);
+    go_bixo->box.x = 100;
+    go_bixo->box.y = 100;
+    
+
+    GameObject* go_map = new GameObject();
+    go_map->box.x = 0;
+    go_map->box.y = 0;
+
+
+
+    TileSet* ts = new TileSet(16,16,"./assets/img/tileset.png");
+    TileMap* tm = new TileMap(*go_map,"./assets/map/map.txt",ts);
+    go_map->AddComponent(tm);
+    
 
     music.Open("./assets/audio/memo.wav");
     music.Play();
+
+    //EM ORDEM:
+    AddObject(go_bg); 
+    AddObject(go_map);
+    AddObject(go_bixo);
 }
 
 State::~State(){

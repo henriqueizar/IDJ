@@ -24,6 +24,8 @@ class State{
         Music music;
         bool quitRequested;
         std::vector<std::unique_ptr<GameObject>> objectArray;
+        GameObject tileMap;
+        
 };
 
 #endif
