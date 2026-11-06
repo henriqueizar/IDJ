@@ -1,6 +1,8 @@
 #ifndef BIXO_H
 #define BIXO_H
 #include "GameObject.h"
+#include "Sound.h"
+#include "Animator.h"
 
 class Bixo : public Component{
     public:
@@ -11,6 +13,9 @@ class Bixo : public Component{
     private:
         int hitpoints;
         float speed;
+        int direction = 1;
+        Sound* step_sound;
+        Animator* anim = nullptr;
 };
 
 #endif
