@@ -39,7 +39,7 @@ Game::Game(std::string title, int width, int height){
         std::cout << "Error SDL_CreateRenderer:" << SDL_GetError() << std::endl;
     }
 
-    SDL_RenderSetLogicalSize(renderer,500,250);
+    SDL_RenderSetLogicalSize(renderer,320,180);
 
     state = new State();
 };
@@ -54,13 +54,21 @@ Game& Game::GetInstance(std::string title, int width, int height){
         return *instance;
 }
 
-
 void Game::Run(){
     while (!GetState().QuitRequested()){
         GetState().Update(0);
         GetState().Render();
+
+/*#ifdef DEBUG
+        // Debug grid: one line every 16 logical pixels
+        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 90);   // translucent red
+        for (int x = 0; x < 320; x += 16) SDL_RenderDrawLine(renderer, x, 0, x, 180);
+        for (int y = 0; y < 180; y += 16) SDL_RenderDrawLine(renderer, 0, y, 320, y);
+#endif*/
+
         SDL_RenderPresent(renderer);
-        SDL_Delay(33); //1 frame por 33 ms, ~ 30FPS
+        SDL_Delay(33); // 30 FPS
     }
 }
 
