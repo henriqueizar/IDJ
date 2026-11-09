@@ -4,7 +4,7 @@
 #include "State.h"
 #include "SDL_include.h"
 #include <iostream>
-
+#include "Resources.h"
 // construtor
 Game::Game(std::string title, int width, int height){
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) != 0) {
@@ -70,6 +70,7 @@ void Game::Run(){
         SDL_RenderPresent(renderer);
         SDL_Delay(33); // 30 FPS
     }
+    Resources::ClearImages();
 }
 
 SDL_Renderer* Game::GetRenderer(){
