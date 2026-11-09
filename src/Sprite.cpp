@@ -3,6 +3,7 @@
 #include "SDL_include.h"
 #include "Game.h"
 #include <iostream>
+#include "Resources.h"
 
 Sprite::Sprite() : texture(nullptr), frameCountW(1), frameCountH(1){
     Sprite::texture = nullptr;
@@ -15,16 +16,17 @@ Sprite::Sprite(std::string file, int frameCountW, int frameCountH)
 }
 
 Sprite::~Sprite(){
-    if (texture != nullptr){
+    /*if (texture != nullptr){
     SDL_DestroyTexture(texture);
-    }
+    }*/
 }
 
 void Sprite::Open(std::string file){
-    if (IsOpen()) {
+    //IMG_LoadTexture(sr, file.c_str());
+    /*if (IsOpen()) {
         SDL_DestroyTexture(texture);
-    }
-    texture = IMG_LoadTexture(Game::GetInstance("",0,0).GetRenderer(), file.c_str());
+    }*/
+    texture = Resources::GetImage(file);
     if (!IsOpen()){
         std::cout << "IMG_LoadTexture probably returns nullptr" <<  '\n' << IMG_GetError() << std::endl;
         return;

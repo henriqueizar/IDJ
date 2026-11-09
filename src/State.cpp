@@ -16,6 +16,12 @@ State::State(){
     go_bixo->AddComponent(bixo);
     go_bixo->box.x = 100;
     go_bixo->box.y = 100;
+
+    GameObject* go_bixo2 = new GameObject();
+    Bixo* bixo2 = new Bixo(*go_bixo2);
+    go_bixo2->AddComponent(bixo2);
+    go_bixo2->box.x = 200;
+    go_bixo2->box.y = 80;
     
 
     GameObject* go_map = new GameObject();
@@ -36,6 +42,7 @@ State::State(){
     AddObject(go_bg); 
     AddObject(go_map);
     AddObject(go_bixo);
+    AddObject(go_bixo2);
 }
 
 State::~State(){
