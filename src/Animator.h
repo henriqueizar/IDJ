@@ -13,6 +13,7 @@ class Animator : public Component{
         void Render();
         void SetAnimation(std::string name);
         void AddAnimation(std::string name, Animation anim);
+        int GetCurrentFrame();
     private:
         std::unordered_map<std::string,Animation> animations;
         int frameStart;

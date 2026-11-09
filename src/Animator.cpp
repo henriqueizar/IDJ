@@ -51,3 +51,7 @@ void Animator::AddAnimation(std::string name, Animation anim){
         animations.emplace(name, anim);
     }
 }
+
+int Animator::GetCurrentFrame(){
+    return currentFrame;
+}
