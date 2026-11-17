@@ -82,3 +82,7 @@ InputManager& InputManager::GetInstance(){
     static InputManager inputManager;
     return inputManager;
 }
+
+bool InputManager::QuitRequested(){
+    return quitRequested;
+}

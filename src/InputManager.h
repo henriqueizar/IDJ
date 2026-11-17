@@ -27,6 +27,8 @@ class InputManager{
         int GetMouseY();
         static InputManager& GetInstance();
 
+        bool QuitRequested();
+
     private:
         InputManager();
         ~InputManager();
