@@ -14,7 +14,7 @@ SDL_Texture* Resources::GetImage(std::string file){
     if (it != imageTable.end()){
         return it->second;  //resgata do cache
     }
-    SDL_Texture* texture = IMG_LoadTexture(Game::GetInstance("", 0, 0).GetRenderer(), file.c_str());
+    SDL_Texture* texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
     if (texture == nullptr) {
         std::cerr << "Resources: failed to load " << file << "\n" << IMG_GetError() << std::endl;
         return nullptr;                          // failure handling

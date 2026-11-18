@@ -42,7 +42,7 @@ void Sprite::SetClip(int x, int y, int w, int h){
 }
 
 void Sprite::Render(int x, int y, int w, int h){
-    SDL_Renderer* renderer = Game::GetInstance("",0,0).GetRenderer();
+    SDL_Renderer* renderer = Game::GetInstance().GetRenderer();
     SDL_Rect dstrect;
     dstrect.x = x;
     dstrect.y = y;

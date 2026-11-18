@@ -19,10 +19,10 @@ Game(std::string title, int width, int height);
     SDL_Renderer* renderer;
     State* state;
 
-
+    
 
 public:
-    static Game& GetInstance(std::string title, int width, int height);
+    static Game& GetInstance();
     void Run();
     SDL_Renderer* GetRenderer();
     State& GetState();

@@ -1,6 +1,9 @@
 #include "InputManager.h"
 
+#define INCLUDE_SDL
+
 #include "SDL_include.h"
+#include "Game.h"
 
 InputManager::InputManager() : mouseState{}, mouseUpdate{}, updateCounter(0), quitRequested(false), mouseX(0), mouseY(0){
 
@@ -19,8 +22,13 @@ InputManager::~InputManager(){
 
 void InputManager::Update() {
     SDL_Event event;
-
+    float mouseLogicalX;
+    float mouseLogicalY;
     SDL_GetMouseState(&mouseX, &mouseY);
+    SDL_Renderer* renderer = Game::GetInstance().GetRenderer();
+    SDL_RenderWindowToLogical(renderer, mouseX, mouseY, &mouseLogicalX, &mouseLogicalY);
+    mouseX = mouseLogicalX;
+    mouseY = mouseLogicalY;
     quitRequested = false;
     updateCounter++;
 

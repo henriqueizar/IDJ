@@ -5,6 +5,11 @@
 #include "SDL_include.h"
 #include <iostream>
 #include "Resources.h"
+#include "InputManager.h"
+
+const std::string title = "MEMO";
+const int width = 1280;
+const int height = 720;
 // construtor
 Game::Game(std::string title, int width, int height){
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) != 0) {
@@ -47,7 +52,7 @@ Game::Game(std::string title, int width, int height){
 Game* Game::instance = nullptr;
 
 // controle de instancia unica do jogo
-Game& Game::GetInstance(std::string title, int width, int height){
+Game& Game::GetInstance(){
     if (instance == nullptr){
         instance = new Game(title, width, height);
     }
@@ -56,8 +61,13 @@ Game& Game::GetInstance(std::string title, int width, int height){
 
 void Game::Run(){
     while (!GetState().QuitRequested()){
+        InputManager::GetInstance().Update();
         GetState().Update(0);
         GetState().Render();
+//Agora, vamos integrar o InputManager ao programa. Acrescente uma
+// chamada ao método Update em Game::Run(), logo antes da chamada ao
+// update do estado. Feito isso, adicione os seguintes comportamentos a
+// State::Update():
 
 /*#ifdef DEBUG
         // Debug grid: one line every 16 logical pixels
