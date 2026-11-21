@@ -3,11 +3,12 @@
 
 #include "SpriteRenderer.h"
 
-Animator::Animator(GameObject& associated) : Component(associated), frameEnd(0), frameStart(0), frameTime(0), timeElapsed(0){
+Animator::Animator(GameObject& associated) : Component(associated), frameEnd(0), frameStart(0), frameTime(0), timeElapsed(0), finished(false){
 
 }
 
 void Animator::Update(float dt){
+
     if (frameTime == 0) {
         return;
     } else{
@@ -16,7 +17,11 @@ void Animator::Update(float dt){
             ++currentFrame;
             timeElapsed -= frameTime;
             if (currentFrame > frameEnd){
-                currentFrame = frameStart;
+                if(loop){ //loop
+                    currentFrame = frameStart;
+                } else{
+                    finished = true;
+                }
             }
             SpriteRenderer* sr = associated.GetComponent<SpriteRenderer>();
             sr->SetFrame(currentFrame);
@@ -29,6 +34,7 @@ void Animator::Render(){
 }
 
 void Animator::SetAnimation(std::string name){
+    finished = false;
     auto it = animations.find(name);
 
     if (it != animations.end()){
@@ -36,6 +42,7 @@ void Animator::SetAnimation(std::string name){
         frameEnd = it->second.frameEnd;
         frameTime = it->second.frameTime;
         currentFrame = frameStart;
+        loop = it->second.loop;
         timeElapsed = 0;
         SpriteRenderer* sr = associated.GetComponent<SpriteRenderer>();
         sr->SetFrame(currentFrame);
@@ -54,4 +61,8 @@ void Animator::AddAnimation(std::string name, Animation anim){
 
 int Animator::GetCurrentFrame(){
     return currentFrame;
+}
+
+bool Animator::IsFinished(){
+    return finished;
 }
