@@ -5,11 +5,12 @@
 #include "Bixo.h"
 #include "TileMap.h"
 #include "InputManager.h"
+#include "Camera.h"
 
 State::State(){
     quitRequested = false;
     GameObject* go_bg = new GameObject();
-    SpriteRenderer* sr_bg = new SpriteRenderer(*go_bg, "./assets/img/Backgroud2.png");
+    SpriteRenderer* sr_bg = new SpriteRenderer(*go_bg, "./assets/img/bg-preto.png");
     go_bg->AddComponent(sr_bg);
     
     /*GameObject* go_bixo = new GameObject();
@@ -33,6 +34,7 @@ State::State(){
     TileSet* ts = new TileSet(16,16,"./assets/img/tileset.png");
     TileMap* tm = new TileMap(*go_map,"./assets/map/map.txt",ts);
     go_map->AddComponent(tm);
+    tm->SetLayerParallaxSpeed(0, 0.2);
     
 
     music.Open("./assets/audio/memo.wav");
@@ -43,6 +45,8 @@ State::State(){
     AddObject(go_map);
     //AddObject(go_bixo);
     //AddObject(go_bixo2);
+    Camera::SetWorldSize(ts->GetTileWidth()*tm->GetWidth(),ts->GetTileHeight()*tm->GetHeight());
+    //sr_bg->SetCameraFollower();
 }
 
 State::~State(){
@@ -68,10 +72,14 @@ void State::Update(float dt){
         GameObject* go_bixo = new GameObject();
         Bixo* bixo = new Bixo(*go_bixo);
         go_bixo->AddComponent(bixo);
-        go_bixo->box.x = InputManager::GetInstance().GetMouseX();
-        go_bixo->box.y = InputManager::GetInstance().GetMouseY();
+        go_bixo->box.x = InputManager::GetInstance().GetMouseX() - Camera::pos.x;// - (go_bixo->box.w)/2;
+        go_bixo->box.y = InputManager::GetInstance().GetMouseY() - Camera::pos.y;// - (go_bixo->box.w)/2;
         AddObject(go_bixo);
     }
+    Camera::Update(dt);
+// Em State::Update, chame o
+// update da câmera, e em Sprite::Render, subtraia a posição da câmera de
+// dstRect, e teste se tudo se move corretamente.
 }
 
 void State::Render(){
