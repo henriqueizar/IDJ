@@ -20,3 +20,7 @@ Vec2 operator*(const Vec2& v, float scalar){
 Vec2 operator*(float scalar, const Vec2& v){
     return v*scalar;
 }
+
+bool Vec2::operator==(const Vec2& other) const{
+    return (x == other.x && y == other.y);
+}
