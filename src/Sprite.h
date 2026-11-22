@@ -21,6 +21,7 @@ class Sprite {
         void SetFrame(int frame);
         void SetFrameCount(int frameCountW, int frameCountH);
 
+        bool cameraFollower;
         
     private:
         SDL_Texture* texture;

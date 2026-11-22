@@ -29,3 +29,7 @@ void SpriteRenderer::Open(std::string file){
 void SpriteRenderer::SetFrame(int frame) {
     sprite.SetFrame(frame);
 }
+
+void SpriteRenderer::SetCameraFollower(){
+    sprite.cameraFollower = true;
+}
