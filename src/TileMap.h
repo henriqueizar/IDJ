@@ -18,12 +18,14 @@ class TileMap : public Component{
         int GetHeight();
         int GetDepth();
         void Update(float dt);
+        void SetLayerParallaxSpeed(int layer, float speed);
     private:
         std::vector<int> tileMatrix;
         std::unique_ptr<TileSet> tileSet;
         int mapWidth;
         int mapHeight;
         int mapDepth;
+        std::vector<float> layerParallaxSpeed;
 };
 
 
