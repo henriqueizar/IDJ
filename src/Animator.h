@@ -14,6 +14,7 @@ class Animator : public Component{
         void SetAnimation(std::string name);
         void AddAnimation(std::string name, Animation anim);
         int GetCurrentFrame();
+        bool IsFinished();
     private:
         std::unordered_map<std::string,Animation> animations;
         int frameStart;
@@ -21,6 +22,8 @@ class Animator : public Component{
         float frameTime;
         int currentFrame;
         float timeElapsed;
+        bool loop;
+        bool finished;
 };
 
 

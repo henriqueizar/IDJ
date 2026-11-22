@@ -11,10 +11,11 @@ class Vec2 {
 
         Vec2 operator+(const Vec2& other) const;
         Vec2 operator-(const Vec2& other) const;
+        bool operator==(const Vec2& other) const;
         
 };
-
         Vec2 operator*(const Vec2& v, float scalar);  // v * 2.0f
         Vec2 operator*(float scalar, const Vec2& v); 
+        
 
 #endif

@@ -1,6 +1,8 @@
 #include "TileMap.h"
 #include <fstream>
 #include <iostream>
+#include "Camera.h"
+
 
 TileMap::TileMap(GameObject& associated, std::string file, TileSet* tileSet)
     : Component(associated), tileSet(tileSet), mapWidth(0), mapHeight(0), mapDepth(0) {
@@ -21,6 +23,13 @@ void TileMap::Load(std::string file){
     if (arquivo.peek() == ',') arquivo.ignore();
     arquivo >> mapDepth;
     if (arquivo.peek() == ',') arquivo.ignore();
+
+    layerParallaxSpeed.resize(mapDepth);
+
+    for (int i = 0; i < mapDepth; i++){
+        layerParallaxSpeed[i] = 1;
+    }
+
     int matrixSize = mapWidth*mapHeight*mapDepth;
 
     tileMatrix.resize(matrixSize);
@@ -56,8 +65,11 @@ void TileMap::RenderLayer(int layer) {
     for (int y = 0; y < mapHeight; y++) {
         for (int x = 0; x < mapWidth; x++) {
             // (x, y) -> posicao na tela
-            float posX = associated.box.x + x * tileSet->GetTileWidth();
-            float posY = associated.box.y + y * tileSet->GetTileHeight();
+            float posX = associated.box.x + x * tileSet->GetTileWidth() + (Camera::pos.x * (1-layerParallaxSpeed[layer]));
+            float posY = associated.box.y + y * tileSet->GetTileHeight() + + (Camera::pos.y * (1-layerParallaxSpeed[layer]));
+
+
+
             tileSet->RenderTile(At(x, y, layer), posX, posY);
         }
     }
@@ -77,4 +89,8 @@ int TileMap::GetDepth(){
 
 void TileMap::Update(float dt) {
 
+}
+
+void TileMap::SetLayerParallaxSpeed(int layer, float speed){
+    layerParallaxSpeed[layer] = speed;
 }

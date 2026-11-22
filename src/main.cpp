@@ -8,8 +8,8 @@
 
 
 int main (int argc, char** argv) {
-    Game::GetInstance("Henrique Izar 222026985", 1280, 720);
+    Game::GetInstance();
     std::cout << "ENRIKI ESTEVE AKI";
-    Game::GetInstance("",0,0).Run();
+    Game::GetInstance().Run();
     return 0;
 }

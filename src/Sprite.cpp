@@ -4,13 +4,14 @@
 #include "Game.h"
 #include <iostream>
 #include "Resources.h"
+#include "Camera.h"
 
-Sprite::Sprite() : texture(nullptr), frameCountW(1), frameCountH(1){
+Sprite::Sprite() : texture(nullptr), frameCountW(1), frameCountH(1), cameraFollower(false){
     Sprite::texture = nullptr;
 }
 
 Sprite::Sprite(std::string file, int frameCountW, int frameCountH)
-    : texture(nullptr), frameCountW(frameCountW), frameCountH(frameCountH) {
+    : texture(nullptr), frameCountW(frameCountW), frameCountH(frameCountH), cameraFollower(false) {
     Sprite::Open(file);
 
 }
@@ -42,13 +43,20 @@ void Sprite::SetClip(int x, int y, int w, int h){
 }
 
 void Sprite::Render(int x, int y, int w, int h){
-    SDL_Renderer* renderer = Game::GetInstance("",0,0).GetRenderer();
+    SDL_Renderer* renderer = Game::GetInstance().GetRenderer();
     SDL_Rect dstrect;
-    dstrect.x = x;
-    dstrect.y = y;
+    if (this->cameraFollower == false){
+        dstrect.x = x - Camera::pos.x;
+        dstrect.y = y - Camera::pos.y;
+    } else{
+        dstrect.x = x;
+        dstrect.y = y;
+    }
     dstrect.w = w;
     dstrect.h = h;
     SDL_RenderCopy(renderer, texture, &clipRect, &dstrect);
+    //Sprite::Render, subtraia a posição da câmera de
+// dstRect, e teste se tudo se move corretamente.
 }
 
 int Sprite::GetWidth(){

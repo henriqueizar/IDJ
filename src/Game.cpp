@@ -5,8 +5,15 @@
 #include "SDL_include.h"
 #include <iostream>
 #include "Resources.h"
+#include "InputManager.h"
+
+
+
+const std::string title = "MEMO";
+const int width = 1280;
+const int height = 720;
 // construtor
-Game::Game(std::string title, int width, int height){
+Game::Game(std::string title, int width, int height) : dt(0), frameStart(0){
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) != 0) {
         std::cout << "Error SDL_INIT:" << SDL_GetError() << std::endl;
     } //debug
@@ -39,15 +46,15 @@ Game::Game(std::string title, int width, int height){
         std::cout << "Error SDL_CreateRenderer:" << SDL_GetError() << std::endl;
     }
 
-    SDL_RenderSetLogicalSize(renderer,320,180);
+    SDL_RenderSetLogicalSize(renderer,LOGICAL_WIDTH,LOGICAL_HEIGHT);
 
     state = new State();
-};
+}
 
 Game* Game::instance = nullptr;
 
 // controle de instancia unica do jogo
-Game& Game::GetInstance(std::string title, int width, int height){
+Game& Game::GetInstance(){
     if (instance == nullptr){
         instance = new Game(title, width, height);
     }
@@ -55,8 +62,11 @@ Game& Game::GetInstance(std::string title, int width, int height){
 }
 
 void Game::Run(){
+    frameStart = SDL_GetTicks();
     while (!GetState().QuitRequested()){
-        GetState().Update(0);
+        CalculateDeltaTime();
+        InputManager::GetInstance().Update();
+        GetState().Update(dt);
         GetState().Render();
 
 /*#ifdef DEBUG
@@ -71,6 +81,8 @@ void Game::Run(){
         SDL_Delay(33); // 30 FPS
     }
     Resources::ClearImages();
+    Resources::ClearMusics();
+    Resources::ClearSounds();
 }
 
 SDL_Renderer* Game::GetRenderer(){
@@ -81,4 +93,14 @@ State& Game::GetState(){
     return *state;
 }
 
+void Game::CalculateDeltaTime(){
+    int lastFrameStart = frameStart;
+    frameStart = SDL_GetTicks();
+    dt = float(frameStart - lastFrameStart)/1000.0f;
+
+}
+
+float Game::GetDeltaTime(){
+    return dt;
+}
 

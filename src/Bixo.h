@@ -7,7 +7,7 @@
 class Bixo : public Component{
     public:
         Bixo(GameObject& associated);
-        void Damage(int damage);
+        void Grab(/*GameObject& item*/);
         void Update(float dt);
         void Render();
     private:
@@ -16,6 +16,7 @@ class Bixo : public Component{
         int direction = 1;
         Sound* step_sound;
         Animator* anim = nullptr;
+        bool grabbing = false; //vai virar uma maquina de estados futuramente
 };
 
 #endif
