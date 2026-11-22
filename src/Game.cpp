@@ -46,7 +46,7 @@ Game::Game(std::string title, int width, int height) : dt(0), frameStart(0){
         std::cout << "Error SDL_CreateRenderer:" << SDL_GetError() << std::endl;
     }
 
-    SDL_RenderSetLogicalSize(renderer,320,180);
+    SDL_RenderSetLogicalSize(renderer,LOGICAL_WIDTH,LOGICAL_HEIGHT);
 
     state = new State();
 }

@@ -29,6 +29,9 @@ public:
     SDL_Renderer* GetRenderer();
     State& GetState();
     float GetDeltaTime();
+    static constexpr int LOGICAL_HEIGHT = 180;
+    static constexpr int LOGICAL_WIDTH = 320;
+
 };
 
 
